@@ -11,7 +11,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-const token = "6869606798:AAGgXJAskU9Taed7UFL8WXg_5D4RxfrfYQw";
+// const token = "6869606798:AAGgXJAskU9Taed7UFL8WXg_5D4RxfrfYQw";
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
