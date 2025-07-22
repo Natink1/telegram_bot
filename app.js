@@ -1,9 +1,7 @@
 import express from "express";
 import TelegramBot from "node-telegram-bot-api";
-import OpenAI from "openai";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
-import { split } from "telegram-split";
 dotenv.config();
 const ai = new GoogleGenAI({});
 
