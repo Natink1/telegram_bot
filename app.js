@@ -18,14 +18,16 @@ const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
 bot.on("message", async (msg) => {
   console.log(msg.text);
-  chatid = msg.chat.id;
+
+  const chatId = msg.chat.id;
+
 
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: msg.text,
     });
-
+    
     const sendLongMessage = async (bot, chatId, text) => {
       const chunkSize = 4000;
 
