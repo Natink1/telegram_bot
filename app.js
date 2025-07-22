@@ -3,7 +3,7 @@ import TelegramBot from "node-telegram-bot-api";
 import OpenAI from "openai";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
-import { split } from 'telegram-split';
+import { split } from "telegram-split";
 dotenv.config();
 const ai = new GoogleGenAI({});
 
@@ -27,13 +27,16 @@ bot.on("message", async (msg) => {
       contents: msg.text,
     });
 
-    const longMessage = response.text; // Your long AI response
-    const chunks = split(longMessage);
+    const sendLongMessage = async (bot, chatId, text) => {
+      const chunkSize = 4000;
 
-    for (const chunk of chunks) {
-      await bot.sendMessage(chatId, chunk);
-    }
+      for (let i = 0; i < text.length; i += chunkSize) {
+        const chunk = text.substring(i, i + chunkSize);
+        await bot.sendMessage(chatId, chunk);
+      }
+    };
 
+    sendLongMessage(bot, chatId, response.text);
   } catch (error) {
     console.error("Error:", error);
     const chatId = msg.chat.id;
