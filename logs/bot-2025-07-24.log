@@ -1,0 +1,7 @@
+{"chatId":540612093,"level":"info","message":"hey","timestamp":"2025-07-24T20:53:56.932Z","type":"INCOMING_MESSAGE","userId":540612093,"username":"Natink48"}
+{"chatId":540612093,"level":"info","message":"hello","timestamp":"2025-07-24T20:54:45.509Z","type":"INCOMING_MESSAGE","userId":540612093,"username":"Natink48"}
+{"chatId":540612093,"level":"info","message":"hello","timestamp":"2025-07-24T20:55:55.245Z","type":"INCOMING_MESSAGE","userId":540612093,"username":"Natink48"}
+{"chatId":540612093,"level":"info","message":"now","timestamp":"2025-07-24T20:57:37.318Z","type":"INCOMING_MESSAGE","userId":540612093,"username":"Natink48"}
+{"chatId":540612093,"level":"info","message":"now","timestamp":"2025-07-24T20:58:31.814Z","type":"INCOMING_MESSAGE","userId":540612093,"username":"Natink48"}
+{"chatId":540612093,"level":"info","message":"now","timestamp":"2025-07-24T20:59:27.620Z","type":"INCOMING_MESSAGE","userId":540612093,"username":"Natink48"}
+{"level":"info","message":{"chatId":540612093,"chunkNumber":4000,"messageLength":41,"timestamp":"2025-07-24T20:59:34.166Z","totalChunks":1,"type":"OUTGOING_MESSAGE"},"timestamp":"2025-07-24T20:59:34.166Z"}
