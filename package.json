@@ -5,7 +5,10 @@
   "main": "App",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "node app.js",
+  "build": "your-build-command-here"
+
   },
   "repository": {
     "type": "git",
