@@ -38,7 +38,6 @@ const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 // Start the server
 
 bot.on("message", async (msg) => {
-  console.log(msg.text);
   logger.info({
     type: "INCOMING_MESSAGE",
     chatId: msg.chat.id,
@@ -62,18 +61,17 @@ bot.on("message", async (msg) => {
       for (let i = 0; i < text.length; i += chunkSize) {
         const chunk = text.substring(i, i + chunkSize);
         await bot.sendMessage(chatId, chunk);
-   
 
-    logger.info({
-      type: 'OUTGOING_MESSAGE',
-      chatId: chatId,
-      chunkNumber: chunkSize,
-      totalChunks: Math.ceil(text.length / chunkSize),
-      messageLength: chunk.length,
-      timestamp: new Date().toISOString(),
-      message: chunk
-    });
-   }
+        logger.info({
+          type: "OUTGOING_MESSAGE",
+          chatId: chatId,
+          chunkNumber: chunkSize,
+          totalChunks: Math.ceil(text.length / chunkSize),
+          messageLength: chunk.length,
+          timestamp: new Date().toISOString(),
+          message: chunk,
+        });
+      }
     };
     sendLongMessage(bot, chatId, response.text);
   } catch (error) {
@@ -86,7 +84,6 @@ bot.on("message", async (msg) => {
     );
   }
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
