@@ -33,7 +33,8 @@ const logger = winston.createLogger({
   ],
 });
 
-const bot = new TelegramBot(process.env.TOKEN, { polling: true });
+const bot = new TelegramBot(process.env.TOKEN);
+bot.setWebHook(`https://telegram-bot-agl9.onrender.com/bot${process.env.TOKEN}`);
 
 // Start the server
 
