@@ -10,8 +10,10 @@ const ai = new GoogleGenAI({});
 
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 // const token = "6869606798:AAGgXJAskU9Taed7UFL8WXg_5D4RxfrfYQw";
-app.use(express.json());
+
 // Create a bot that uses 'polling' to fetch new updates
 const logger = winston.createLogger({
   level: "info",
@@ -31,19 +33,12 @@ const logger = winston.createLogger({
   ],
 });
 
-const bot = new TelegramBot(process.env.TOKEN);
-bot.setWebHook(
-  `https://telegram-bot-agl9.onrender.com/bot${process.env.TOKEN}`
-);
+const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
 // Start the server
-app.post(`/bot${process.env.TOKEN}`, (req, res) => {
-  console.log("Webhook received a message:", req.body);
-  bot.processUpdate(req.body); // Pass the update to the bot
-  res.sendStatus(200);
-});
 
 bot.on("message", async (msg) => {
+  console.log(msg.text);
   logger.info({
     type: "INCOMING_MESSAGE",
     chatId: msg.chat.id,
@@ -54,12 +49,11 @@ bot.on("message", async (msg) => {
   });
 
   const chatId = msg.chat.id;
-  console.log(msg.text);
 
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: msg.text,
+      contents: msg.text
     });
 
     const sendLongMessage = async (bot, chatId, text) => {
@@ -68,17 +62,18 @@ bot.on("message", async (msg) => {
       for (let i = 0; i < text.length; i += chunkSize) {
         const chunk = text.substring(i, i + chunkSize);
         await bot.sendMessage(chatId, chunk);
+   
 
-        logger.info({
-          type: "OUTGOING_MESSAGE",
-          chatId: chatId,
-          chunkNumber: chunkSize,
-          totalChunks: Math.ceil(text.length / chunkSize),
-          messageLength: chunk.length,
-          timestamp: new Date().toISOString(),
-          message: chunk,
-        });
-      }
+    logger.info({
+      type: 'OUTGOING_MESSAGE',
+      chatId: chatId,
+      chunkNumber: chunkSize,
+      totalChunks: Math.ceil(text.length / chunkSize),
+      messageLength: chunk.length,
+      timestamp: new Date().toISOString(),
+      message: chunk
+    });
+   }
     };
     sendLongMessage(bot, chatId, response.text);
   } catch (error) {
@@ -92,6 +87,7 @@ bot.on("message", async (msg) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("Bot is alive!");
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
