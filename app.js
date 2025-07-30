@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // const token = "6869606798:AAGgXJAskU9Taed7UFL8WXg_5D4RxfrfYQw";
-
+app.use(express.json());
 // Create a bot that uses 'polling' to fetch new updates
 const logger = winston.createLogger({
   level: "info",
@@ -39,7 +39,6 @@ bot.setWebHook(
 );
 
 // Start the server
-
 app.post(`/bot${process.env.TOKEN}`, (req, res) => {
   console.log("Webhook received a message:", req.body);
   bot.processUpdate(req.body); // Pass the update to the bot
@@ -93,8 +92,6 @@ bot.on("message", async (msg) => {
     );
   }
 });
-
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Bot is alive!");
