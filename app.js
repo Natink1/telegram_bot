@@ -10,8 +10,6 @@ const ai = new GoogleGenAI({});
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-
 // const token = "6869606798:AAGgXJAskU9Taed7UFL8WXg_5D4RxfrfYQw";
 app.use(express.json());
 // Create a bot that uses 'polling' to fetch new updates
@@ -56,6 +54,7 @@ bot.on("message", async (msg) => {
   });
 
   const chatId = msg.chat.id;
+  console.log(msg.text);
 
   try {
     const response = await ai.models.generateContent({
