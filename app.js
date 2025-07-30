@@ -34,9 +34,17 @@ const logger = winston.createLogger({
 });
 
 const bot = new TelegramBot(process.env.TOKEN);
-bot.setWebHook(`https://telegram-bot-agl9.onrender.com/bot${process.env.TOKEN}`);
+bot.setWebHook(
+  `https://telegram-bot-agl9.onrender.com/bot${process.env.TOKEN}`
+);
 
 // Start the server
+
+app.post(`/bot${process.env.TOKEN}`, (req, res) => {
+  console.log("Webhook received a message:", req.body);
+  bot.processUpdate(req.body); // Pass the update to the bot
+  res.sendStatus(200);
+});
 
 bot.on("message", async (msg) => {
   logger.info({
@@ -86,6 +94,8 @@ bot.on("message", async (msg) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Bot is alive!");
 });
